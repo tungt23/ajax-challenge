@@ -8,16 +8,34 @@
         <link rel="stylesheet" href="css/main.css">
     </head>
     <body>
-
-        <main class="container">
-            <section>
+        <main class="container" ng-app="Comments" ng-controller="CommentController">
+            <header class="img-rounded">
+                <h1 id="title">Product Comments</h1>
+            </header>
+            <section id="header">
                 <img src="img/super-bass-o-matic-76.jpg" alt="product picture" class="product-picture">
                 <h1>The Super Bass-o-Matic '76</h1>
                 <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Officia cumque deserunt ullam repudiandae nisi corporis! Ipsum, ducimus commodi, itaque porro distinctio consequuntur! Autem doloremque numquam nemo ex nulla tempora quis! Lorem ipsum dolor sit amet, consectetur adipisicing elit. Unde nihil doloribus excepturi quisquam error possimus veritatis facere, commodi cumque ab atque dolore ducimus obcaecati ipsa, impedit! Consequuntur, eligendi iure cumque!</p>
             </section>
 
-            <section>
+            <section id="add-comment">
                 <h2>Add a Comment</h2>
+                <form name="commentForm" ng-submit="addComment()">
+                    <div class="form-group">
+                        <rating max="5" ng-model="newComment.rating"></rating>
+                    </div>
+                    <div id="name" class="form-group">
+                        <input type="text" name="name" placeholder="Who are you?" ng-model="newComment.name" class="form-control" size="20">
+                    </div>
+                    <div id="title" class="form-group">
+                        <input type="text" name="title" placeholder="Title" ng-model="newComment.title" class="form-control" size="20">
+                    </div>
+                    <div class="form-group">
+                            <textarea cols="40" rows="5" name="comment" placeholder="Share your thoughts" ng-model="newComment.comment" class="form-control"></textarea>
+                    </div>
+                    <button class="btn btn-primary posting" type="submit" ng-disabled="inserting">Post!</button>
+                    <img class="posting" src="img/ajax-spinner.gif" alt="loading animation" ng-if="posting">
+                </form>
                 <!--  
                 put a form here for entering a new comment
                 the user must select a rating, and enter a name, title, and comment body
@@ -28,13 +46,36 @@
                 -->
             </section>
 
-            <section>
-                <h2>Comments</h2>
+            <section id="comments">
+                <h2>Comments 
+                    <button class="btn btn-primary" ng-click="refreshTasks()">Refresh</button> 
+                    <img src="img/ajax-spinner.gif" alt="loading animation" ng-if="loading || updating">
+                </h2>
                 <!-- 
                 display existing comments here
                 each comment should also have UI allowing the user to vote up/down the comment
                 as well as delete it
                  -->
+                <p ng-if="comments.length <= 0">No comments yet! Be the first to review this!</p>
+                <table ng-if="comments.length > 0"class="table">
+                    <tbody>
+                        <tr ng-repeat="comment in comments">
+                            <td>
+                                {{comment.name}} <rating class="no-clicky" max="5" ng-model="comment.rating" readonly="true"></rating>
+                                <br />
+                                {{comment.title}}
+                                <br />
+                                {{comment.comment}}
+                            </td>
+                            <td>
+                                {{comment.votes || 0}}
+                                <span class="glyphicon glyphicon-thumbs-up" ng-click="incrementVotes(comment, 1)"></span>
+                                <span class="glyphicon glyphicon-thumbs-down" ng-click="incrementVotes(comment, -1)"></span>
+                            </td>
+                            <td><input class="checkbox" type="checkbox" ng-model="comment.delete" ng-change="deleteComment(comment)"></td>
+                        </tr>
+                    </tbody>
+                </table>
             </section>
 
         </main>

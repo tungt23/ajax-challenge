@@ -1,13 +1,52 @@
-@import url(http://fonts.googleapis.com/css?family=Ubuntu:400,500);
+@import url(http://fonts.googleapis.com/css?family=Ubuntu:300,400,500);
 
 body {
     font-family: 'Ubuntu', 'Helvetica Neue', 'Helvetica', sans-serif;
-    font-weight: 400;
+    font-weight: 300;
+   	background-color: #F8FFFF;
+}
+main {
+}
+header {
+	margin-bottom: 10px;
+	background-image: url('../img/top-banner.png');
+	width: 100%;	
+	padding-top: 30px;
+	padding-bottom: 30px;
+	padding-left: 30px;
+	background-repeat: no-repeat;
+	background-size: cover;
+	color: white;
+	margin: 0px;
+}
+
+#title {
+	font-size: 5em;
+	font-weight: 300;
 }
 
 .product-picture {
     float: left;
-    height: 130px;
+    height: 135px;
     margin-right: 10px;
 }
 
+.posting {
+	float: right;
+}
+
+#add-comment {
+	clear: both;
+	padding-top: 5px;
+}
+#comments {
+	clear: right;
+}
+
+.glyphicon:hover, .checkbox {
+	cursor: pointer;
+}
+
+.no-clicky {
+	cursor: default;
+}
